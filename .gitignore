@@ -1,0 +1,47 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# CodeIgniter
+frontend/writable/cache/*
+frontend/writable/logs/*
+frontend/writable/session/*
+frontend/writable/uploads/*
+frontend/vendor/
+
+# FastAPI / Python
+backend/venv/
+backend/.venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets and keys
+*.pem
+*.ppk
+*.key
+
+# Uploads
+uploads/
+storage/private/
+
+# Temporary files
+*.tmp
+*.temp
+
+# File
+Points.txt
