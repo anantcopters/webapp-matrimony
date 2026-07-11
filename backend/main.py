@@ -5,7 +5,7 @@ from fastapi import FastAPI, status
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.core.database import test_database_connection
-from app.core.redis_client import test_redis_connection
+from app.core.redis import test_redis_connection
 
 logger = logging.getLogger(__name__)
 

@@ -1,36 +1,26 @@
-import os
+"""PostgreSQL engine and session configuration."""
 
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-load_dotenv()
+from app.core.config import get_settings
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+settings = get_settings()
 
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not configured")
-
+# Keep connections healthy and recycle them before common infrastructure limits.
 engine = create_engine(
-    DATABASE_URL,
+    settings.DATABASE_URL,
     pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
+    pool_recycle=1800,
+    pool_size=10,
+    max_overflow=20,
+    pool_timeout=30,
 )
 
+# Create request-scoped database sessions.
 SessionLocal = sessionmaker(
     bind=engine,
     autocommit=False,
     autoflush=False,
+    expire_on_commit=False,
 )
-
-
-class Base(DeclarativeBase):
-    pass
-
-
-def test_database_connection() -> bool:
-    with engine.connect() as connection:
-        connection.execute(text("SELECT 1"))
-
-    return True

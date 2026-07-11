@@ -45,3 +45,6 @@ storage/private/
 
 # File
 Points.txt
+
+# Scripts
+start-dev.sh
